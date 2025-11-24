@@ -1,12 +1,24 @@
 <script lang="ts">
-	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
-	
-	let { children } = $props();
+	import { DarkMode } from 'flowbite-svelte';
+	import '../app.css';
+	import Sidebar from '../components/sidebar.svelte';
+	import type { LayoutProps } from './$types';
+
+	let { data, children }: LayoutProps = $props();
 </script>
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-{@render children()}
+<DarkMode
+	class="fixed top-2 right-2 z-50 border text-primary-500 dark:border-gray-800 dark:text-primary-600"
+/>
+{#if data.user}
+	<Sidebar user={data.user}>
+		{@render children()}
+	</Sidebar>
+{:else}
+	{@render children()}
+{/if}
