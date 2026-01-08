@@ -1,8 +1,10 @@
 <script lang="ts">
-	import { page } from '$app/state';
+	import type { PageProps } from './$types';
+
+	let { data }: PageProps = $props();
 </script>
 
-{#if page.url.search.includes("?success=true")}
+{#if data.success}
 	<div class="flex min-h-full min-w-full items-center justify-center">
 		<span class="dark:text-white">Pagada</span>
 	</div>

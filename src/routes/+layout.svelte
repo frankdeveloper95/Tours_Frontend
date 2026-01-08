@@ -12,13 +12,12 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
+<!-- Toggle Dark / Light -->
 <DarkMode
 	class="fixed top-2 right-2 z-50 border text-primary-500 dark:border-gray-800 dark:text-primary-600"
 />
-{#if data.user}
-	<Sidebar>
-		{@render children()}
-	</Sidebar>
-{:else}
+
+<!-- ✅ Sidebar SIEMPRE visible -->
+<Sidebar user={data.user ?? null}>
 	{@render children()}
-{/if}
+</Sidebar>

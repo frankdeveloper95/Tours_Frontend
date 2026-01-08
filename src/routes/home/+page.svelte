@@ -1,25 +1,23 @@
 <script lang="ts">
 	import { Button, Card } from 'flowbite-svelte';
 	import type { PageProps } from './$types';
+	import { PUBLIC_HOST, PUBLIC_VERSION } from '$env/static/public';
 
 	let { data }: PageProps = $props();
 
 	async function checkout(id: number) {
 		const token = data.access_token;
-		const res = await fetch('http://localhost:8000/api/v1/checkout', {
+		const res = await fetch(`${PUBLIC_HOST}/api/${PUBLIC_VERSION}/checkout`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`
 			},
-			body: JSON.stringify({
-				product_id: id
-			})
+			body: JSON.stringify({ product_id: id })
 		});
+
 		const url = await res.json();
-		if (url) {
-			window.location.href = url.url;
-		}
+		if (url) window.location.href = url.url;
 	}
 </script>
 
@@ -27,31 +25,90 @@
 	<title>Home</title>
 </svelte:head>
 
-<div class="flex flex-wrap justify-center gap-4">
-	{#each data.tours as tour}
-		<Card class="p-0">
-			<img
-				class="h-64 rounded-t-lg bg-cover p-8"
-				src={`http://localhost:8000/public${tour.image_url}`}
-				alt={tour.nombre}
-			/>
-			<div class="px-5 pb-5">
-				<a href="/tour/{tour.id}">
-					<h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-						{tour.nombre}
-					</h5>
-				</a>
-				<div class="flex items-center justify-between">
-					<span class="text-3xl font-bold text-gray-900 dark:text-white">{`\$${tour.precio}`}</span>
-					<Button
-						onclick={(e: Event) => {
-							e.preventDefault();
-							checkout(tour.id);
-						}}
-						type="button">Reservar</Button
-					>
-				</div>
-			</div>
-		</Card>
-	{/each}
+<div class="mx-auto w-full max-w-7xl px-4 py-6">
+	<!-- Header -->
+	<div class="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+		<div>
+			<h1 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Tours disponibles</h1>
+			<p class="text-sm text-gray-600 dark:text-gray-300">
+				Explora experiencias y reserva rápido.
+			</p>
+		</div>
+
+		<div
+			class="w-fit rounded-full border border-gray-200 bg-white px-4 py-2 text-sm text-gray-700 shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-200"
+		>
+			{data?.tours?.length ?? 0} tour(s)
+		</div>
+	</div>
+
+	<!-- Estado vacío / loading-safe -->
+	{#if !data?.tours || data.tours.length === 0}
+		<div
+			class="rounded-3xl border border-dashed border-gray-300 bg-white p-10 text-center dark:border-gray-700 dark:bg-gray-900/40"
+		>
+			<h2 class="text-lg font-semibold text-gray-900 dark:text-white">No hay tours para mostrar</h2>
+			<p class="mt-1 text-sm text-gray-600 dark:text-gray-300">
+				Si esto es inesperado, revisa que tu endpoint esté devolviendo la lista.
+			</p>
+		</div>
+	{:else}
+		<!-- Grid -->
+		<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+			{#each data.tours as tour (tour.id)}
+				<Card class="overflow-hidden rounded-3xl border border-gray-200 p-0 shadow-sm dark:border-gray-800">
+					<!-- Imagen -->
+					<a href={`/tour/${tour.id}`} class="relative block">
+						<img
+							class="h-56 w-full object-cover"
+							src={`${PUBLIC_HOST}/public${tour.image_url}`}
+							alt={tour.nombre}
+							loading="lazy"
+						/>
+						<div class="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent"></div>
+						<div class="absolute bottom-3 left-3 right-3">
+							<h3 class="truncate text-lg font-semibold text-white">{tour.nombre}</h3>
+							<p class="truncate text-xs text-white/80">Ver detalles del tour</p>
+						</div>
+					</a>
+
+					<!-- Info + acciones -->
+					<div class="space-y-4 p-5">
+						<div class="flex items-center justify-between">
+							<span class="text-xl font-bold text-gray-900 dark:text-white">{`\$${tour.precio}`}</span>
+
+							<span class="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+								<span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+								Disponible
+							</span>
+						</div>
+
+						<div class="flex gap-3">
+							<Button
+								class="w-full rounded-2xl"
+								onclick={(e: Event) => {
+									e.preventDefault();
+									checkout(tour.id);
+								}}
+								type="button"
+							>
+								Reservar
+							</Button>
+
+							<a
+								href={`/tour/${tour.id}`}
+								class="w-full rounded-2xl border border-gray-200 bg-white px-4 py-2 text-center text-sm font-medium text-gray-900 shadow-sm hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:hover:bg-gray-800"
+							>
+								Detalles
+							</a>
+						</div>
+
+						<p class="text-xs text-gray-500 dark:text-gray-400">
+							* Te redirigirá al pago para completar la reserva.
+						</p>
+					</div>
+				</Card>
+			{/each}
+		</div>
+	{/if}
 </div>
