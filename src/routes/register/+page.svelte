@@ -1,6 +1,13 @@
 <script lang="ts">
-	import { Input, Label, Alert } from 'flowbite-svelte';
+	import { Alert } from 'flowbite-svelte';
 	import type { PageProps } from './$types';
+
+	import RegisterProgress from '$lib/features/auth/components/RegisterProgress.svelte';
+	import RegisterStep1 from '$lib/features/auth/components/RegisterStep1.svelte';
+	import RegisterStep2 from '$lib/features/auth/components/RegisterStep2.svelte';
+	import RegisterStep3 from '$lib/features/auth/components/RegisterStep3.svelte';
+
+	import { validateStep } from '$lib/features/auth/register/register.client';
 
 	let { form }: PageProps = $props();
 
@@ -22,18 +29,10 @@
 	function nextStep() {
 		clientMessage = null;
 
-		if (step === 1) {
-			if (!formData.cedula.trim() || !formData.nombre.trim() || !formData.apellido.trim()) {
-				clientMessage = 'Completa cédula, nombre y apellido.';
-				return;
-			}
-		}
-
-		if (step === 2) {
-			if (!formData.telefono.trim() || !formData.email.trim()) {
-				clientMessage = 'Completa teléfono y email.';
-				return;
-			}
+		const msg = validateStep(step, formData);
+		if (msg) {
+			clientMessage = msg;
+			return;
 		}
 
 		if (step < totalSteps) step++;
@@ -50,71 +49,32 @@
 </svelte:head>
 
 <form method="POST" class="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
-	<!-- ✅ step correcto -->
 	<input type="hidden" name="step" value={step} />
 
-	<!-- ✅ para que SIEMPRE se envíen aunque el paso no esté visible -->
 	<input type="hidden" name="cedula" value={formData.cedula} />
 	<input type="hidden" name="nombre" value={formData.nombre} />
 	<input type="hidden" name="apellido" value={formData.apellido} />
 	<input type="hidden" name="telefono" value={formData.telefono} />
 	<input type="hidden" name="email" value={formData.email} />
-	<!-- opcional: si quieres asegurar el envío aunque cambies la UI luego -->
 	<input type="hidden" name="password" value={formData.password} />
 
 	<div class="w-full max-w-md space-y-6 rounded-2xl bg-white p-6 shadow-lg dark:bg-gray-800">
 		<h2 class="text-center text-2xl font-bold text-gray-900 dark:text-white">Crear cuenta</h2>
 
-		<div class="h-2 w-full rounded-full bg-gray-200 dark:bg-gray-700">
-			<div class="h-2 rounded-full bg-blue-600 transition-all duration-300" style={`width: ${progress}%`} />
-		</div>
+		<RegisterProgress {progress} />
 
 		{#if clientMessage}
-			<Alert color="failure">{clientMessage}</Alert>
+			<Alert color="red">{clientMessage}</Alert>
 		{:else if form?.message && step === totalSteps}
-			<Alert color="failure">{form.message}</Alert>
+			<Alert color="red">{form.message}</Alert>
 		{/if}
 
 		{#if step === 1}
-			<div class="space-y-4">
-				<div>
-					<Label for="cedula">Cédula</Label>
-					<Input id="cedula" name="cedula" bind:value={formData.cedula} required />
-				</div>
-
-				<div>
-					<Label for="nombre">Nombre</Label>
-					<Input id="nombre" name="nombre" bind:value={formData.nombre} required />
-				</div>
-
-				<div>
-					<Label for="apellido">Apellido</Label>
-					<Input id="apellido" name="apellido" bind:value={formData.apellido} required />
-				</div>
-			</div>
-		{/if}
-
-		{#if step === 2}
-			<div class="space-y-4">
-				<div>
-					<Label for="telefono">Teléfono</Label>
-					<Input id="telefono" name="telefono" bind:value={formData.telefono} required />
-				</div>
-
-				<div>
-					<Label for="email">Email</Label>
-					<Input id="email" name="email" type="email" bind:value={formData.email} required />
-				</div>
-			</div>
-		{/if}
-
-		{#if step === 3}
-			<div class="space-y-4">
-				<div>
-					<Label for="password">Contraseña</Label>
-					<Input id="password" name="password" type="password" bind:value={formData.password} required />
-				</div>
-			</div>
+			<RegisterStep1 {formData} />
+		{:else if step === 2}
+			<RegisterStep2 {formData} />
+		{:else}
+			<RegisterStep3 {formData} />
 		{/if}
 
 		<div class="flex justify-between pt-4">
