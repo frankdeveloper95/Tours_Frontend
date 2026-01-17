@@ -20,7 +20,7 @@
 					name="email"
 					placeholder="example@domain.com"
 					required
-					value={data.user.email}
+					value={data.user?.email ?? ''}
 				/>
 			</div>
 		</div>
