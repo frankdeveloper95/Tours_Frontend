@@ -1,11 +1,14 @@
 import { redirect } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
 
-export const load: LayoutServerLoad = async ({ parent }) => {
-	const { user } = await parent();
+export const load: LayoutServerLoad = async ({ cookies }) => {
+	const token = cookies.get('access_token');
 
-	if (!user) throw redirect(302, '/login');
-	if (user.rol_id !== 1) throw redirect(302, '/home');
+	// 🔐 solo verificamos existencia
+	if (!token) throw redirect(302, '/login');
+
+	// ❌ NO usar parent()
+	// ❌ NO verificar rol aquí (el backend lo hace mejor)
 
 	return {};
 };

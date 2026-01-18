@@ -1,24 +1,12 @@
 <script lang="ts">
 	import { Button, Card } from 'flowbite-svelte';
-	import type { PageProps } from './$types';
-	import { PUBLIC_HOST, PUBLIC_VERSION } from '$env/static/public';
+	const { data } = $props();
 
-	let { data }: PageProps = $props();
-
-	async function checkout(id: number) {
-		const token = data.access_token;
-		const res = await fetch(`${PUBLIC_HOST}/api/${PUBLIC_VERSION}/checkout`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${token}`
-			},
-			body: JSON.stringify({ product_id: id })
-		});
-
-		const url = await res.json();
-		if (url) window.location.href = url.url;
+	function reservar(id: number) {
+		location.href = `/protected/checkout?tourId=${id}`;
 	}
+
+	const FALLBACK_IMG = 'https://via.placeholder.com/1200x800?text=Tour';
 </script>
 
 <svelte:head>
@@ -26,13 +14,10 @@
 </svelte:head>
 
 <div class="mx-auto w-full max-w-7xl px-4 py-6">
-	<!-- Header -->
 	<div class="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
 		<div>
 			<h1 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Tours disponibles</h1>
-			<p class="text-sm text-gray-600 dark:text-gray-300">
-				Explora experiencias y reserva rápido.
-			</p>
+			<p class="text-sm text-gray-600 dark:text-gray-300">Explora experiencias y reserva rápido.</p>
 		</div>
 
 		<div
@@ -42,37 +27,31 @@
 		</div>
 	</div>
 
-	<!-- Estado vacío / loading-safe -->
 	{#if !data?.tours || data.tours.length === 0}
-		<div
-			class="rounded-3xl border border-dashed border-gray-300 bg-white p-10 text-center dark:border-gray-700 dark:bg-gray-900/40"
-		>
+		<div class="rounded-3xl border border-dashed border-gray-300 bg-white p-10 text-center dark:border-gray-700 dark:bg-gray-900/40">
 			<h2 class="text-lg font-semibold text-gray-900 dark:text-white">No hay tours para mostrar</h2>
 			<p class="mt-1 text-sm text-gray-600 dark:text-gray-300">
 				Si esto es inesperado, revisa que tu endpoint esté devolviendo la lista.
 			</p>
 		</div>
 	{:else}
-		<!-- Grid -->
 		<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 			{#each data.tours as tour (tour.id)}
 				<Card class="overflow-hidden rounded-3xl border border-gray-200 p-0 shadow-sm dark:border-gray-800">
-					<!-- Imagen -->
 					<a href={`/tour/${tour.id}`} class="relative block">
 						<img
 							class="h-56 w-full object-cover"
-							src={`${PUBLIC_HOST}/public${tour.image_url}`}
+							src={tour.image_url ?? FALLBACK_IMG}
 							alt={tour.nombre}
 							loading="lazy"
 						/>
 						<div class="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent"></div>
 						<div class="absolute bottom-3 left-3 right-3">
 							<h3 class="truncate text-lg font-semibold text-white">{tour.nombre}</h3>
-							<p class="truncate text-xs text-white/80">Ver detalles del tour</p>
+							<p class="truncate text-xs text-white/80">{tour.destino ?? 'Ver detalles del tour'}</p>
 						</div>
 					</a>
 
-					<!-- Info + acciones -->
 					<div class="space-y-4 p-5">
 						<div class="flex items-center justify-between">
 							<span class="text-xl font-bold text-gray-900 dark:text-white">{`\$${tour.precio}`}</span>
@@ -84,14 +63,7 @@
 						</div>
 
 						<div class="flex gap-3">
-							<Button
-								class="w-full rounded-2xl"
-								onclick={(e: Event) => {
-									e.preventDefault();
-									checkout(tour.id);
-								}}
-								type="button"
-							>
+							<Button class="w-full rounded-2xl" onclick={() => reservar(tour.id)} type="button">
 								Reservar
 							</Button>
 
@@ -104,7 +76,7 @@
 						</div>
 
 						<p class="text-xs text-gray-500 dark:text-gray-400">
-							* Te redirigirá al pago para completar la reserva.
+							* Te llevará al checkout para completar la reserva.
 						</p>
 					</div>
 				</Card>

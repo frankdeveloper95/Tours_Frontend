@@ -110,9 +110,9 @@
 						</p>
 
 						<div class="mt-4 flex flex-wrap gap-2">
-							<Badge color="info" class="rounded-full">Refrigerio</Badge>
-							<Badge color="success" class="rounded-full">Guía local</Badge>
-							<Badge color="warning" class="rounded-full">Cupos limitados</Badge>
+							<Badge color="violet" class="rounded-full">Refrigerio</Badge>
+							<Badge color="green" class="rounded-full">Guía local</Badge>
+							<Badge color="red" class="rounded-full">Cupos limitados</Badge>
 						</div>
 					</div>
 				</div>
@@ -163,9 +163,10 @@
 							<div class="aspect-[16/10] bg-gray-100 dark:bg-gray-800">
 								{#if tour.image_url}
 									<img
-										class="h-full w-full object-cover transition group-hover:scale-[1.02]"
-										src={`${PUBLIC_HOST}/public${tour.image_url}`}
+										class="h-72 w-full object-cover sm:h-96"
+										src={tour.image_url ?? 'https://i.ytimg.com/vi/nHnZxTvBj30/maxresdefault.jpg'}
 										alt={tour.nombre}
+										loading="lazy"
 									/>
 								{/if}
 							</div>

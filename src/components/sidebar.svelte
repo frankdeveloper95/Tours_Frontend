@@ -78,7 +78,7 @@
 
 	const adminCrudSidebar = [
 		{ label: 'Usuarios', href: '/admin/users' },
-		{ label: 'Tours', href: '/admin/tours' },
+		{ label: 'Tours', href: '/admin/tours/create' },
 		{ label: 'Operadoras', href: '/admin/operadoras' },
 		{ label: 'Guías', href: '/admin/guias' }
 	];
