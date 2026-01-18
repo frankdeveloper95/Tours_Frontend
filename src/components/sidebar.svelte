@@ -63,7 +63,6 @@
 	const publicSidebar = [
 		{ label: 'Inicio', href: '/' },
 		{ label: 'Tours', href: '/home' },
-		{ label: 'Operadoras', href: '/operadoras' },
 		{ label: 'Cómo funciona', href: '/como-funciona' },
 		{ label: 'FAQs', href: '/faqs' },
 		{ label: 'Contacto', href: '/contacto' }
@@ -71,29 +70,27 @@
 
 	const userSidebar = [
 		{ label: 'Mis Reservas', href: '/protected/reservas' },
-		{ label: 'Favoritos', href: '/protected/favoritos' },
-		{ label: 'Pagos / Facturas', href: '/protected/pagos' },
 		{ label: 'Mi Perfil', href: '/protected/perfil' }
 	];
 
 	const adminCrudSidebar = [
 		{ label: 'Usuarios', href: '/admin/users' },
-		{ label: 'Tours', href: '/admin/tours/create' },
-		{ label: 'Operadoras', href: '/admin/operadoras' },
-		{ label: 'Guías', href: '/admin/guias' }
+		{ label: 'Tours', href: '/admin/tours/create' }
+		// { label: 'Operadoras', href: '/admin/operadoras' },
+		// { label: 'Guías', href: '/admin/guias' }
 	];
 
-	const adminOpsSidebar = [
-		{ label: 'Reservas', href: '/admin/reservas' },
-		{ label: 'Zarpes / Cupos', href: '/admin/zarpes' },
-		{ label: 'Reportes', href: '/admin/reportes' },
-		{ label: 'Bitácora', href: '/admin/bitacora' }
-	];
+	// const adminOpsSidebar = [
+	// 	{ label: 'Reservas', href: '/admin/reservas' },
+	// 	{ label: 'Zarpes / Cupos', href: '/admin/zarpes' },
+	// 	{ label: 'Reportes', href: '/admin/reportes' },
+	// 	{ label: 'Bitácora', href: '/admin/bitacora' }
+	// ];
 </script>
 
 <!-- ✅ Botón flotante SOLO móvil -->
 {#if !isDesktop}
-	<div class="fixed left-4 top-4 z-[60] md:hidden">
+	<div class="fixed top-4 left-4 z-[60] md:hidden">
 		<SidebarButton
 			onclick={() => (mobileOpen = !mobileOpen)}
 			class="rounded-2xl border border-gray-200 bg-white/80 shadow-sm backdrop-blur hover:bg-white dark:border-gray-800 dark:bg-gray-900/80 dark:hover:bg-gray-900"
@@ -123,7 +120,9 @@
 			<!-- Brand -->
 			<div class="mb-6 px-4">
 				<div class="flex items-center gap-3">
-					<div class="grid h-10 w-10 place-items-center rounded-2xl bg-primary-600 text-white shadow-sm">
+					<div
+						class="grid h-10 w-10 place-items-center rounded-2xl bg-primary-600 text-white shadow-sm"
+					>
 						<span class="text-sm font-bold">T</span>
 					</div>
 					<div class="min-w-0">
@@ -168,7 +167,7 @@
 							{/each}
 						</SidebarDropdownWrapper>
 
-						<SidebarDropdownWrapper
+						<!-- <SidebarDropdownWrapper
 							label="Operación"
 							classes={{
 								btn:
@@ -179,7 +178,7 @@
 							{#each adminOpsSidebar as { label, href }}
 								<SidebarItem {label} {href} />
 							{/each}
-						</SidebarDropdownWrapper>
+						</SidebarDropdownWrapper> -->
 					</SidebarGroup>
 				</div>
 			{/if}
@@ -226,7 +225,9 @@
 			<!-- mismo contenido -->
 			<div class="mb-6 px-4">
 				<div class="flex items-center gap-3">
-					<div class="grid h-10 w-10 place-items-center rounded-2xl bg-primary-600 text-white shadow-sm">
+					<div
+						class="grid h-10 w-10 place-items-center rounded-2xl bg-primary-600 text-white shadow-sm"
+					>
 						<span class="text-sm font-bold">T</span>
 					</div>
 					<div class="min-w-0">

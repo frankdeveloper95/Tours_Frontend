@@ -1,6 +1,9 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
+
 	let { data }: PageProps = $props();
+
+	console.log('Reservas data:', data);
 </script>
 
 <svelte:head>
@@ -16,32 +19,39 @@
 	</div>
 
 	{#if !data.reservas || data.reservas.length === 0}
-		<div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-900">
+		<div
+			class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-900"
+		>
 			<p class="text-sm text-slate-700 dark:text-white/70">Aún no tienes reservas.</p>
 		</div>
 	{:else}
 		<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
 			{#each data.reservas as r}
-				<div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-900">
+				<div
+					class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-900"
+				>
 					<div class="flex items-start justify-between gap-3">
 						<div>
 							<div class="text-xs font-semibold text-slate-500 dark:text-white/50">
-								Reserva #{r.id}
+								Reserva #{r.tour.id}
 							</div>
-							<div class="text-lg font-bold">{r.tour_nombre ?? 'Tour'}</div>
+							<div class="text-lg font-bold">{r.tour.nombre ?? 'Tour'}</div>
 							<div class="mt-1 text-sm text-slate-600 dark:text-white/60">
-								{r.fecha ?? ''} {r.hora ?? ''}
+								{r.fecha ?? ''}
+								{r.hora ?? ''}
 							</div>
 						</div>
 
-						<span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700 dark:bg-white/10 dark:text-white/80">
-							{r.estado_reserva ?? 'Pendiente'}
+						<span
+							class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700 dark:bg-white/10 dark:text-white/80"
+						>
+							{r.estado.estado ?? 'Pendiente'}
 						</span>
 					</div>
 
 					<div class="mt-3 text-sm text-slate-700 dark:text-white/70">
-						<div><span class="font-semibold">Personas:</span> {r.cantidad_personas ?? '-'}</div>
-						<div><span class="font-semibold">Total:</span> ${r.total ?? '-'}</div>
+						<div><span class="font-semibold">Personas:</span> {r.tour.capacidad_maxima ?? '-'}</div>
+						<div><span class="font-semibold">Total:</span> ${r.tour.precio ?? '-'}</div>
 					</div>
 				</div>
 			{/each}
