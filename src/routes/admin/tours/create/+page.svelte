@@ -1,36 +1,40 @@
 <script lang="ts">
-	import { Button, Label, Input, Textarea, Alert } from 'flowbite-svelte';
-	import type { PageProps } from '../$types';
+    import { Button, Label, Input, Textarea, Alert, Select } from 'flowbite-svelte';
+    import type { PageProps } from '../$types';
+    import type { TourPageData } from '$lib/types/page';
 
-	let { form }: PageProps = $props();
+    let { form, data: pageData }: PageProps & { data: TourPageData } = $props();
 
-	type TourFormData = {
-		nombre?: string;
-		destino?: string;
-		descripcion?: string;
-		fecha?: string;
-		hora_inicio?: string;
-		hora_fin?: string;
-		precio?: string;
-		capacidad_maxima?: string;
-		image_url?: string;
-		incluye?: string;
-		no_incluye?: string;
-		que_llevar?: string;
-		itinerario?: string;
-		politicas?: string;
-	};
 
-	const data = (form?.data ?? {}) as TourFormData;
-	const errors = (form?.errors ?? {}) as Record<string, string>;
 
-	function err(k: keyof TourFormData) {
-		return errors?.[String(k)] ?? null;
-	}
+    type TourFormData = {
+        nombre?: string;
+        destino?: string;
+        descripcion?: string;
+        fecha?: string;
+        hora_inicio?: string;
+        hora_fin?: string;
+        precio?: string;
+        capacidad_maxima?: string;
+        image_url?: string;
+        incluye?: string;
+        no_incluye?: string;
+        que_llevar?: string;
+        itinerario?: string;
+        politicas?: string;
+		guias?: string;
+    };
+
+    const data = (form?.data ?? {}) as TourFormData;
+    const errors = (form?.errors ?? {}) as Record<string, string>;
+
+    function err(k: keyof TourFormData) {
+        return errors?.[String(k)] ?? null;
+    }
 </script>
 
 <svelte:head>
-	<title>Crear tour</title>
+    <title>Crear tour</title>
 </svelte:head>
 
 <div class="mx-auto w-full max-w-3xl p-4 text-slate-900 dark:text-white">
@@ -65,6 +69,21 @@
 			<Textarea id="descripcion" name="descripcion" rows={4} required value={data.descripcion ?? ''} />
 			{#if err('descripcion')}<p class="mt-1 text-xs text-red-500">{err('descripcion')}</p>{/if}
 		</div>
+		<div>
+			<Label for="id_guia">Guía</Label>
+
+			<Select id="id_guia" name="id_guia" required>
+				<option value="">Selecciona un guía</option>
+				{#each pageData.guias as g}
+					<option value={g.id}>{g.usuario.nombre}</option>
+				{/each}
+			</Select>
+
+			{#if err('id_guia')}
+				<p class="mt-1 text-xs text-red-500">{err('id_guia')}</p>
+			{/if}
+		</div>
+
 
 		<div class="grid gap-4 sm:grid-cols-3">
 			<div>
