@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Button, Label, Input, Textarea, Alert, Select } from 'flowbite-svelte';
-    import type { PageProps } from '../$types';
+    import type { PageProps } from './$types';
     import type { TourPageData } from '$lib/types/page';
 
     let { form, data: pageData }: PageProps & { data: TourPageData } = $props();

@@ -1,23 +1,23 @@
-import { PUBLIC_HOST, PUBLIC_VERSION } from '$env/static/public';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
-// si ya creaste estos helpers:
+import { getTourById } from '$lib/api/tours.api';
 import { mapTourToVM } from '$lib/services/tour.mapper';
-import type { Tour } from '$lib/types/tour.types';
 
 export const load: PageServerLoad = async ({ fetch, params }) => {
-	const id = Number(params.slug);
-	if (!Number.isFinite(id)) throw error(400, 'ID inválido');
+    const id = Number(params.slug);
 
-	const res = await fetch(`${PUBLIC_HOST}/api/${PUBLIC_VERSION}/tours/${id}`, {
-		credentials: 'include' // recomendado (por si el backend usa cookies)
-	});
+    if (!Number.isFinite(id)) {
+        throw error(400, 'ID inválido');
+    }
 
-	if (!res.ok) throw error(res.status, 'No se pudo cargar el tour');
+    const { ok, status, tour } = await getTourById(fetch, String(id), undefined, {
+        cache: 'no-store'
+    });
 
-	const tour = (await res.json()) as Tour;
+    if (!ok || !tour || tour.is_active === false) {
+        throw error(404, 'Este tour no está disponible');
+    }
 
-	// devolvemos data "limpia" para el Svelte
-	return mapTourToVM(tour);
+    return mapTourToVM(tour);
 };

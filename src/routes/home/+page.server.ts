@@ -26,7 +26,7 @@ export const actions = {
 		});
 		if (res.ok) {
 			const result = await res.json();
-			console.log(result);
+
 			redirect(303, result.url);
 		} else {
 			return fail(400, { message: 'Error al procesar el pago' });

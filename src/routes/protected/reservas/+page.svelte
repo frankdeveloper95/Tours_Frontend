@@ -3,7 +3,7 @@
 
 	let { data }: PageProps = $props();
 
-	console.log('Reservas data:', data);
+
 </script>
 
 <svelte:head>

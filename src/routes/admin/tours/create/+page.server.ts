@@ -1,5 +1,5 @@
 import { fail } from '@sveltejs/kit';
-import type { Actions, PageServerLoad } from '../$types';
+import type { Actions, PageServerLoad } from './$types';
 import { PUBLIC_HOST, PUBLIC_VERSION } from '$env/static/public';
 
 function linesToArray(v: string) {
@@ -33,9 +33,6 @@ export const actions: Actions = {
         const fd = await request.formData();
         const data = Object.fromEntries(fd) as Record<string, string>;
         const errors: Record<string, string> = {};
-
-        // 🔍 LOG 1: Ver lo que llega del formulario
-        console.log("📌 FORMDATA RECIBIDO:", data);
 
         const nombre = (data.nombre ?? '').trim();
         const destino = (data.destino ?? '').trim();
@@ -87,9 +84,6 @@ export const actions: Actions = {
             itinerario: linesToArray(data.itinerario ?? ''),
             id_guia
         };
-
-        // 🔍 LOG 2: Ver el payload final que se envía al backend
-        console.log("📌 PAYLOAD ENVIADO AL BACKEND:", payload);
 
         const token = cookies.get('access_token');
 

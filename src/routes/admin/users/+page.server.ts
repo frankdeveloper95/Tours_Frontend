@@ -50,11 +50,6 @@ export const actions: Actions = {
 
 		const fd = await request.formData();
 
-		// 🔍 DEBUG: ver qué rol_id llega realmente
-		console.log('rol_id values:', fd.getAll('rol_id'));
-		console.log('email:', fd.get('email'));
-		console.log('id:', fd.get('id'));
-
 		const rolRaw = String(fd.getAll('rol_id').at(-1) ?? '');
 		const id = String(fd.get('id') ?? '');
 		const email = String(fd.get('email') ?? '');
