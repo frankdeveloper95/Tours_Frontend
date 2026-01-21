@@ -76,7 +76,8 @@
 	const adminCrudSidebar = [
 		{ label: 'Usuarios', href: '/admin/users' },
 		{ label: 'Crear Tours', href: '/admin/tours/create' },
-		{ label: 'Gestionar tours', href: '/admin/tours'}
+		{ label: 'Gestionar tours', href: '/admin/tours'},
+		{ label: 'Gestionar reservas', href: '/admin/reservas' }
 		// { label: 'Operadoras', href: '/admin/operadoras' },
 		// { label: 'Guías', href: '/admin/guias' }
 	];
@@ -188,25 +189,26 @@
 				<p class={sectionTitleClass}>Acceso</p>
 				<SidebarGroup>
 					<SidebarDropdownWrapper
-						label="Configuraciones"
-						classes={{
-							btn:
-								'rounded-2xl px-3 py-2 text-sm font-semibold ' +
-								'text-gray-800 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800/70'
-						}}
-					>
-						{#snippet icon()}
-							<EditSolid class="h-5 w-5 text-gray-500 dark:text-gray-400" />
-						{/snippet}
+							label="Configuraciones"
+							classes={{
+								btn:
+									'rounded-2xl px-3 py-2 text-sm font-semibold ' +
+									'text-gray-800 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800/70'
+							}}
+						>
+							{#snippet icon()}
+								<EditSolid class="h-5 w-5 text-gray-500 dark:text-gray-400" />
+							{/snippet}
 
-						<SidebarItem label="Configuración" href="/user/config" />
-
-						{#if !isLoggedIn}
-							<SidebarItem label="Iniciar sesión" href="/login" />
-							<SidebarItem label="Crear cuenta" href="/register" />
-						{:else}
-							<SidebarItem label="Cerrar sesión" href="/logout" />
-						{/if}
+							{#if isLoggedIn}
+								<!-- SOLO usuarios logueados -->
+								<SidebarItem label="Configuración" href="/user/config" />
+								<SidebarItem label="Cerrar sesión" href="/logout" />
+							{:else}
+								<!-- SOLO usuarios NO logueados -->
+								<SidebarItem label="Iniciar sesión" href="/login" />
+								<SidebarItem label="Crear cuenta" href="/register" />
+							{/if}
 					</SidebarDropdownWrapper>
 				</SidebarGroup>
 			</div>
