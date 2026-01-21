@@ -77,10 +77,13 @@
 						</div>
 
 						<div class="flex gap-3">
-							<form action="?/checkout" method="POST" use:enhance>
-								<input type="hidden" name="id" value={tour.id} />
-								<Button class="w-full rounded-2xl" type="submit">Reservar</Button>
-							</form>
+							<Button
+								class="w-full rounded-2xl"
+								type="button"
+								onclick={() => reservar(tour.id)}
+							>
+								Reservar
+							</Button>
 
 							<a
 								href={`/tour/${tour.id}`}
@@ -89,6 +92,7 @@
 								Detalles
 							</a>
 						</div>
+
 
 						<p class="text-xs text-gray-500 dark:text-gray-400">
 							* Te llevará al checkout para completar la reserva.

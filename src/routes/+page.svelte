@@ -156,7 +156,7 @@
 			<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 				{#each data.featured as tour}
 					<a
-						href={`/tours/${tour.id}`}
+						href={`/tour/${tour.id}`}
 						class="group rounded-3xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-gray-800 dark:bg-gray-900"
 					>
 						<div class="overflow-hidden rounded-3xl">
@@ -245,14 +245,25 @@
 
 		<div class="mt-4">
 			<Accordion>
-				{#each faqs as f}
-					<AccordionItem>
-						<span slot="header" class="font-semibold">{f.q}</span>
-						<p class="text-sm text-gray-600 dark:text-gray-300">{f.a}</p>
+				{#each faqs as f, i}
+					<AccordionItem id={"faq-" + i}>
+						
+						<!-- HEADER: debe ser inline y simple -->
+						<span slot="header" class="font-semibold text-slate-900 dark:text-white">
+							{f.q}
+						</span>
+
+						<!-- CONTENIDO: usa div para evitar errores de slot -->
+						<div class="text-sm text-gray-600 dark:text-gray-300">
+							{f.a}
+						</div>
+
 					</AccordionItem>
 				{/each}
 			</Accordion>
 		</div>
+
+
 	</section>
 
 	<!-- CTA FINAL -->
