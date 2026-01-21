@@ -236,36 +236,6 @@
 		</div>
 	</section>
 
-	<!-- FAQs -->
-	<section class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-		<h2 class="text-2xl font-extrabold text-gray-900 dark:text-white">Preguntas frecuentes</h2>
-		<p class="mt-1 text-sm text-gray-600 dark:text-gray-300">
-			Respuestas rápidas para que nadie se quede con dudas.
-		</p>
-
-		<div class="mt-4">
-			<Accordion>
-				{#each faqs as f, i}
-					<AccordionItem id={"faq-" + i}>
-						
-						<!-- HEADER: debe ser inline y simple -->
-						<span slot="header" class="font-semibold text-slate-900 dark:text-white">
-							{f.q}
-						</span>
-
-						<!-- CONTENIDO: usa div para evitar errores de slot -->
-						<div class="text-sm text-gray-600 dark:text-gray-300">
-							{f.a}
-						</div>
-
-					</AccordionItem>
-				{/each}
-			</Accordion>
-		</div>
-
-
-	</section>
-
 	<!-- CTA FINAL -->
 	<section
 		class="rounded-3xl border border-gray-200 bg-gradient-to-br from-white to-sky-50 p-6 shadow-sm dark:border-gray-800 dark:from-gray-900 dark:to-gray-900 md:p-10"
