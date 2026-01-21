@@ -16,24 +16,32 @@
 	bg-slate-50 text-slate-900
 	dark:bg-slate-950 dark:text-white"
 >
-	<div class="absolute -top-32 -left-32 h-96 w-96 rounded-full blur-3xl bg-cyan-500/15 dark:bg-cyan-500/20" />
-	<div class="absolute -bottom-40 -right-40 h-[28rem] w-[28rem] rounded-full blur-3xl bg-indigo-500/15 dark:bg-indigo-500/20" />
+	<div
+		class="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-cyan-500/15 blur-3xl dark:bg-cyan-500/20"
+	/>
+	<div
+		class="absolute -right-40 -bottom-40 h-[28rem] w-[28rem] rounded-full bg-indigo-500/15 blur-3xl dark:bg-indigo-500/20"
+	/>
 	<div
 		class="absolute inset-0
 		bg-[radial-gradient(circle_at_50%_30%,rgba(0,0,0,0.06),transparent_55%)]
 		dark:bg-[radial-gradient(circle_at_50%_30%,rgba(255,255,255,0.06),transparent_55%)]"
 	/>
 
-	<section class="relative mx-auto flex min-h-screen max-w-6xl items-center justify-center px-4 py-10">
+	<section
+		class="relative mx-auto flex min-h-screen max-w-6xl items-center justify-center px-4 py-10"
+	>
 		<div
-			class="grid w-full max-w-5xl grid-cols-1 overflow-hidden rounded-3xl border shadow-2xl backdrop-blur-xl md:grid-cols-2
-			border-slate-900/10 bg-white/70
+			class="grid w-full max-w-5xl grid-cols-1 overflow-hidden rounded-3xl border border-slate-900/10 bg-white/70 shadow-2xl
+			backdrop-blur-xl md:grid-cols-2
 			dark:border-white/10 dark:bg-white/5"
 		>
 			<!-- Panel izquierdo (branding) -->
 			<div class="hidden flex-col justify-between p-10 md:flex">
 				<div class="flex items-center gap-3">
-					<div class="grid h-10 w-10 place-items-center rounded-2xl bg-slate-900/5 dark:bg-white/10">
+					<div
+						class="grid h-10 w-10 place-items-center rounded-2xl bg-slate-900/5 dark:bg-white/10"
+					>
 						<span class="text-lg font-bold text-slate-900 dark:text-white">S</span>
 					</div>
 					<div class="leading-tight">
@@ -64,7 +72,9 @@
 					</ul>
 				</div>
 
-				<p class="text-xs text-slate-400 dark:text-white/40">© {new Date().getFullYear()} Spondylus Tours</p>
+				<p class="text-xs text-slate-400 dark:text-white/40">
+					© {new Date().getFullYear()} Spondylus Tours
+				</p>
 			</div>
 
 			<!-- Panel derecho (form) -->
@@ -104,13 +114,13 @@
 								Password
 							</Label>
 
-							<a
+							<!-- <a
 								href="/auth/forgot"
 								class="text-sm text-cyan-700 hover:underline
 								dark:text-cyan-300/90 dark:hover:text-cyan-200"
 							>
 								¿Olvidaste tu contraseña?
-							</a>
+							</a> -->
 						</div>
 
 						<!-- ✅ No repoblar password: evita el error TS y es mejor práctica -->
