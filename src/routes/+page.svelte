@@ -55,11 +55,15 @@
 <div class="flex flex-col gap-10">
 	<!-- HERO -->
 	<section
-		class="relative overflow-hidden rounded-3xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900 md:p-10"
+		class="relative overflow-hidden rounded-3xl border border-gray-200 bg-white p-6 shadow-sm md:p-10 dark:border-gray-800 dark:bg-gray-900"
 	>
 		<!-- fondo decorativo -->
-		<div class="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-primary-200/60 blur-3xl dark:bg-primary-900/40"></div>
-		<div class="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-cyan-200/50 blur-3xl dark:bg-cyan-900/30"></div>
+		<div
+			class="pointer-events-none absolute -top-20 -right-20 h-72 w-72 rounded-full bg-primary-200/60 blur-3xl dark:bg-primary-900/40"
+		></div>
+		<div
+			class="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-cyan-200/50 blur-3xl dark:bg-cyan-900/30"
+		></div>
 
 		<div class="relative grid gap-8 md:grid-cols-2 md:items-center">
 			<div class="flex flex-col gap-4">
@@ -69,10 +73,12 @@
 					<Badge color="purple" class="rounded-full">Tours & Operadoras</Badge>
 				</div>
 
-				<h1 class="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white md:text-5xl">
+				<h1
+					class="text-3xl font-extrabold tracking-tight text-gray-900 md:text-5xl dark:text-white"
+				>
 					{brand.tagline}
 				</h1>
-				<p class="text-base text-gray-600 dark:text-gray-300 md:text-lg">
+				<p class="text-base text-gray-600 md:text-lg dark:text-gray-300">
 					{brand.subtitle}
 				</p>
 
@@ -100,7 +106,7 @@
 			<!-- Imagen (puedes cambiar a una real luego) -->
 			<div class="relative">
 				<div
-					class="aspect-[4/3] w-full overflow-hidden rounded-3xl border border-gray-200 bg-gradient-to-br from-sky-50 to-white shadow-sm dark:border-gray-800 dark:from-gray-800 dark:to-gray-900"
+					class="aspect-[4/3] w-full overflow-hidden rounded-3xl border border-gray-200 bg-[url('/salango.jpg')] bg-cover bg-no-repeat dark:border-gray-800 dark:from-gray-800 dark:to-gray-900"
 				>
 					<div class="flex h-full flex-col justify-end p-6">
 						<p class="text-sm font-semibold text-gray-700 dark:text-gray-200">Destacado</p>
@@ -123,7 +129,7 @@
 	<!-- HIGHLIGHTS -->
 	<section class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
 		{#each highlights as h}
-			<Card class="rounded-3xl border border-gray-200 shadow-sm dark:border-gray-800">
+			<Card class="rounded-3xl border border-gray-200 p-5 shadow-sm dark:border-gray-800">
 				<h3 class="text-lg font-bold text-gray-900 dark:text-white">{h.title}</h3>
 				<p class="mt-1 text-sm text-gray-600 dark:text-gray-300">{h.desc}</p>
 			</Card>
@@ -135,12 +141,13 @@
 		<div class="flex items-end justify-between gap-3">
 			<div>
 				<h2 class="text-2xl font-extrabold text-gray-900 dark:text-white">Tours destacados</h2>
-				<p class="text-sm text-gray-600 dark:text-gray-300">
-					Una selección rápida para empezar.
-				</p>
+				<p class="text-sm text-gray-600 dark:text-gray-300">Una selección rápida para empezar.</p>
 			</div>
 
-			<a href="/home" class="text-sm font-semibold text-primary-600 hover:underline dark:text-primary-400">
+			<a
+				href="/home"
+				class="text-sm font-semibold text-primary-600 hover:underline dark:text-primary-400"
+			>
 				Ver todos →
 			</a>
 		</div>
@@ -150,7 +157,9 @@
 				class="rounded-3xl border border-dashed border-gray-300 bg-white p-6 text-gray-600 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300"
 			>
 				<p class="font-semibold">Aún no hay tours destacados para mostrar.</p>
-				<p class="text-sm opacity-90">Cuando tu API devuelva tours, aquí se verán automáticamente.</p>
+				<p class="text-sm opacity-90">
+					Cuando tu API devuelva tours, aquí se verán automáticamente.
+				</p>
 			</div>
 		{:else}
 			<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -164,7 +173,7 @@
 								{#if tour.image_url}
 									<img
 										class="h-72 w-full object-cover sm:h-96"
-										src={tour.image_url ?? 'https://i.ytimg.com/vi/nHnZxTvBj30/maxresdefault.jpg'}
+										src={`${PUBLIC_HOST}/public${tour.image_url}`}
 										alt={tour.nombre}
 										loading="lazy"
 									/>
@@ -199,7 +208,7 @@
 
 	<!-- HOW IT WORKS -->
 	<section
-		class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900 md:p-10"
+		class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm md:p-10 dark:border-gray-800 dark:bg-gray-900"
 	>
 		<div class="flex flex-col gap-2">
 			<h2 class="text-2xl font-extrabold text-gray-900 dark:text-white">¿Cómo funciona?</h2>
@@ -238,7 +247,7 @@
 
 	<!-- CTA FINAL -->
 	<section
-		class="rounded-3xl border border-gray-200 bg-gradient-to-br from-white to-sky-50 p-6 shadow-sm dark:border-gray-800 dark:from-gray-900 dark:to-gray-900 md:p-10"
+		class="rounded-3xl border border-gray-200 bg-gradient-to-br from-white to-sky-50 p-6 shadow-sm md:p-10 dark:border-gray-800 dark:from-gray-900 dark:to-gray-900"
 	>
 		<div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
 			<div>
