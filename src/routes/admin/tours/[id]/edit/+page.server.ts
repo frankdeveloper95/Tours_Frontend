@@ -43,6 +43,8 @@ export const actions: Actions = {
                 error: true,
                 message: 'Error al actualizar el tour'
             });
+        } else {
+            redirect(303, '/admin/tours');
         }
 
         return { success: true };
